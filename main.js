@@ -1,8 +1,11 @@
 const form = document.getElementById("form-barang-input");
 const inputKode = document.getElementById("kode");
+const inputNama = document.getElementById("nama");
+const inputKategori = document.getElementById("kategori");
 const inputJumlah = document.getElementById("jumlah");
+const inputKondisi = document.getElementById("kondisi");
 const inputCari = document.getElementById("cari");
-const baris = document.querySelectorAll("#tabel-barang tbody tr");
+const tbody = document.querySelector("#tabel-barang tbody");
 const toast = document.getElementById("toast");
 
 // ===== Validasi form saat submit =====
@@ -27,8 +30,17 @@ form.addEventListener("submit", function (e) {
     return;
   }
 
-  // Lolos validasi
-  tampilToast("Data barang berhasil divalidasi!", true);
+  // BARU: tambahkan baris ke tabel
+  const tr = document.createElement("tr");
+  [kode, inputNama.value, inputKategori.value, jumlah, inputKondisi.value]
+    .forEach(function (nilai) {
+      const td = document.createElement("td");
+      td.textContent = nilai;
+      tr.appendChild(td);
+    });
+  tbody.appendChild(tr);
+
+  tampilToast("Data barang berhasil ditambahkan!", true);
   form.reset();
 });
 
@@ -36,9 +48,9 @@ form.addEventListener("submit", function (e) {
 inputCari.addEventListener("input", function () {
   const kataKunci = inputCari.value.toLowerCase();
 
-  baris.forEach(function (tr) {
+  // BARU: daftar baris diambil ulang tiap kali, supaya baris baru ikut terfilter
+  tbody.querySelectorAll("tr").forEach(function (tr) {
     const teksBaris = tr.textContent.toLowerCase();
-    // Tampilkan baris kalau mengandung kata kunci, sembunyikan kalau tidak
     tr.style.display = teksBaris.includes(kataKunci) ? "" : "none";
   });
 });
@@ -51,7 +63,7 @@ function tampilToast(pesan, sukses) {
   toast.classList.toggle("error", !sukses);
   toast.hidden = false;
 
-  clearTimeout(timerToast); // reset timer kalau toast dipanggil berulang
+  clearTimeout(timerToast);
   timerToast = setTimeout(function () {
     toast.hidden = true;
   }, 3000);
