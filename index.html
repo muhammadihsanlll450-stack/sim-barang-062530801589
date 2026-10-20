@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIM-Barang</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header id="Beranda">
@@ -20,7 +21,8 @@
   <main>
     <section id="inventaris">
       <h2>Tabel Inventaris Barang</h2>
-      <table>
+      <input type="text" id="cari" placeholder="Cari barang...">
+      <table id="tabel-barang">
         <thead>
           <tr>
             <th>Kode</th>
@@ -58,7 +60,7 @@
 
     <section id="form-barang">
       <h2>Form Input Barang</h2>
-      <form action="#" method="post">
+      <form id="form-barang-input" action="#" method="post" novalidate>
         <label for="kode">Kode Barang</label>
         <input type="text" id="kode" name="kode" placeholder="BRG-001" required>
 
@@ -91,5 +93,8 @@
   <footer>
     <p>&copy; 2026 SIM-Barang - M.Ihsan (062530801589)</p>
   </footer>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="main.js"></script>
 </body>
 </html>
